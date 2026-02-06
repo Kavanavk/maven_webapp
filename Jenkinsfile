@@ -25,6 +25,12 @@ pipeline {
             }
         }
 
+        stage('Run Unit Tests') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
         stage('Approval') {
             steps {
                 script {
@@ -36,8 +42,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['tomcat']) {
-                    sh 'scp -o StrictHostKeyChecking=no target/demo.war ubuntu@3.92.175.176:/home/ubuntu/'
-                    sh 'ssh ubuntu@3.92.175.176 "sudo mv /home/ubuntu/demo.war /opt/tomcat/webapps/"'
+                    sh 'scp -o StrictHostKeyChecking=no target/demo.war ubuntu@18.60.154.214:/home/ubuntu/'
+                    sh 'ssh ubuntu@18.60.154.214 "sudo mv /home/ubuntu/demo.war /opt/tomcat/webapps/"'
                 }
             }
         }
